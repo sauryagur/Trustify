@@ -7,6 +7,7 @@ import { staggerContainer, fadeIn } from "@/lib/animation";
 
 export const ProblemSection = () => {
   return (
+    <>
     <section className="py-24 px-4 bg-gradient-to-b from-black to-gray-900">
       <motion.div
         variants={staggerContainer}
@@ -26,7 +27,7 @@ export const ProblemSection = () => {
               </span>
             </h2>
             
-            <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {wrongReviewData.map((item, index) => (
                 <motion.div
                   key={index}
@@ -38,7 +39,7 @@ export const ProblemSection = () => {
                       transition: { delay: index * 0.1 + 0.2 }
                     }
                   }}
-                  className="flex items-start gap-4"
+                  className="flex items-start gap-4 bg-gray-800/10 p-5 rounded-lg"
                 >
                   <div className="bg-gray-800/50 p-3 rounded-full">
                     <item.icon className="h-6 w-6 text-[#d79921]" />
@@ -54,5 +55,6 @@ export const ProblemSection = () => {
         </Cover>
       </motion.div>
     </section>
+    </>
   );
 };

@@ -11,7 +11,7 @@ const HeroSection = () => {
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
-      className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20"
+      className="relative min-h-[90vh] flex items-center justify-center h-screen overflow-hidden py-20"
     >
       {/* Spotify-inspired background with animated gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 to-green-500/20 backdrop-blur-3xl" />

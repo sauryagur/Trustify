@@ -52,7 +52,7 @@ const ReviewForm = () => {
         <Input
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
-          placeholder="Product Name (optional)"
+          placeholder="Product URL"
           className="bg-gray-50/50 dark:bg-gray-700/50 border-gray-200/50 dark:border-gray-700/50"
         />
       </div>

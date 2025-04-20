@@ -47,7 +47,6 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             {[
               ["Home", "/"],
-              ["Add Review", "/add-review"],
               ["View Reviews", "/view-reviews"],
               ["Dashboard", "/dashboard"],
               ["Docs", "/docs"]
@@ -68,9 +67,8 @@ const Navbar = () => {
           </div>
           
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline" className="rounded-xl">Log In</Button>
             <Button className="bg-blue-600 hover:bg-blue-700 rounded-xl text-white">
-              Sign Up
+              Authenticate
             </Button>
           </div>
           
