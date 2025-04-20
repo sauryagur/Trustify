@@ -1,9 +1,12 @@
-
-import { motion } from "framer-motion";
+import { useLayoutEffect, useRef } from "react";
 import { Shield, Lock, UserCheck, BarChart4, Globe, Code } from "lucide-react";
-import { staggerContainer, fadeIn } from "@/lib/animation";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MotionButton } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
 interface FeatureCardProps {
   icon: React.ComponentType<any>;
@@ -13,20 +16,55 @@ interface FeatureCardProps {
 
 const FeatureCard = ({ icon: Icon, title, description }: FeatureCardProps) => {
   return (
-    <motion.div
-      whileHover={{ scale: 1.03 }}
-      className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-[#d79921]/50 transition-colors hover:shadow-[0_0_15px_rgba(215,153,33,0.2)]"
-    >
+    <div className="feature-card bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 hover:border-[#d79921]/50 transition-colors hover:shadow-[0_0_15px_rgba(215,153,33,0.2)]">
       <div className="bg-[#d79921]/20 p-3 rounded-lg w-fit mb-4">
         <Icon className="h-6 w-6 text-[#d79921]" />
       </div>
       <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
       <p className="text-gray-400">{description}</p>
-    </motion.div>
+    </div>
   );
 };
 
 export const BlockchainSolutionSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const cards = gsap.utils.toArray(".feature-card");
+    
+    gsap.set(cards, {
+      opacity: 0,
+      y: 100,
+      filter: 'blur(15px)',
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: cardsRef.current,
+        start: "top 80%",
+        end: "center center",
+        toggleActions: "play none none reverse",
+      }
+    });
+
+    tl.to(cards, {
+      duration: 1.2,
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      stagger: {
+        each: 0.15,
+        ease: "power2.out",
+      },
+      ease: "power4.out",
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
   const features = [
     {
       icon: Shield,
@@ -51,7 +89,7 @@ export const BlockchainSolutionSection = () => {
     {
       icon: Globe,
       title: "Decentralized Storage",
-      description: "No central authority can manipulate or delete review data."
+      description: "No central authority can manipulate, alter or delete review data."
     },
     {
       icon: Code,
@@ -61,48 +99,26 @@ export const BlockchainSolutionSection = () => {
   ];
 
   return (
-    <section className="py-24 px-4 bg-gradient-to-b from-gray-900 to-black">
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.25 }}
-        className="container mx-auto"
-      >
-        <motion.h2
-          variants={fadeIn}
-          className="text-4xl md:text-5xl font-bold text-center mb-12"
-        >
+    <section className="py-24 px-4 bg-gradient-to-b from-gray-900 to-black" ref={containerRef}>
+      <div className="container mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
           <span className="bg-gradient-to-r from-[#d79921] to-yellow-300 bg-clip-text text-transparent">
             How Trustify solves this.
           </span>
-        </motion.h2>
+        </h2>
 
-        <motion.div 
-          variants={staggerContainer}
+        <div 
+          ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
         >
           {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { 
-                  opacity: 1, 
-                  y: 0,
-                  transition: { delay: index * 0.1 }
-                }
-              }}
-            >
+            <div key={index}>
               <FeatureCard {...feature} />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={fadeIn}
-          className="flex justify-center"
-        >
+        <div className="flex justify-center">
           <MotionButton 
             size="lg" 
             className="gap-2 bg-[#d79921] hover:bg-yellow-600 text-black group"
@@ -110,8 +126,8 @@ export const BlockchainSolutionSection = () => {
             Try Trustify Now
             <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </MotionButton>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 };
