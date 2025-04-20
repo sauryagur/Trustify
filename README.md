@@ -4,7 +4,7 @@
 ```
 dfx stop
 dfx start --clean --background
-npm setup
+npm run setup
 ```
 
 ## Running only the frontend (DEV)
