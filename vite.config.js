@@ -1,19 +1,17 @@
-/// <reference types="vitest" />
 import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
 import { defineConfig } from 'vite'
 import environment from 'vite-plugin-environment'
-import tailwindcss from '@tailwindcss/vite'
-import path from 'path';
+import path from 'path'
 
-dotenv.config();
+dotenv.config()
 
 export default defineConfig({
   root: 'src',
   build: {
     outDir: '../dist',
     emptyOutDir: true,
-    sourcemap: true
+    sourcemap: true,
   },
   optimizeDeps: {
     esbuildOptions: {
@@ -24,8 +22,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+      '@': path.resolve(__dirname, './src'),
+    },
   },
   server: {
     proxy: {
@@ -36,6 +34,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    react(),
     environment('all', { prefix: 'CANISTER_' }),
     environment('all', { prefix: 'DFX_' }),
   ],
@@ -44,5 +43,4 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: 'setupTests.ts',
   },
-  
-});
+})

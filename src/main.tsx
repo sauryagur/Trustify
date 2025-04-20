@@ -1,3 +1,4 @@
+// Add this at the top of the file
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AgentProvider, ActorProvider } from '@ic-reactor/react';
